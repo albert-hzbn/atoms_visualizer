@@ -1,45 +1,63 @@
 # Atoms Visualizer
 
-**Atoms Visualizer** is a simple Blender addon that allows you to import and visualize atomic structures from `.xyz` files directly in the 3D Viewport.
-
----
-
-## 🧬 Features
-
-- Import atomic coordinates from `.xyz` files.
-- Automatically generate spheres for atoms and cylinders for bonds.
-- Customize atomic radii and bond thicknesses.
-- Clean and intuitive UI in the Sidebar.
+A simple Blender addon to load and visualize atomic structures from `.xyz` files.
 
 ---
 
 ## 📦 Addon Info
 
-| Key         | Value                            |
-|-------------|----------------------------------|
-| Name        | Atoms Visualizer                 |
-| Author      | Albert Linda                     |
-| Version     | 0.0.1                            |
-| Blender     | 2.80+                            |
-| Location    | 3D Viewport → Sidebar → Atoms Visualizer |
-| Category    | Import-Export                    |
-| Description | A simple addon to load atoms in .xyz format. |
+- **Name:** Atoms Visualizer  
+- **Author:** Albert Linda  
+- **Version:** 0.0.1  
+- **Blender Support:** 2.80+  
+- **Category:** Import-Export  
+- **Location in Blender:** 3D Viewport → Sidebar (`N` key) → Atoms Visualizer tab  
+- **Description:** Load atomic positions from `.xyz` files and visualize them as spheres and bonds in the 3D viewport.
 
 ---
 
 ## 🚀 Installation
 
-1. Download or clone the repository.
-2. Open Blender.
+### Option 1: From `.py` File
+
+1. Download the `atoms_visualizer.py` file.
+2. Open **Blender**.
 3. Go to `Edit` → `Preferences` → `Add-ons`.
-4. Click `Install...` and select the `.zip` or `.py` file.
-5. Enable the **Atoms Visualizer** addon.
-6. You will find it in the **Sidebar (N key)** under the **Atoms Visualizer** tab.
+4. Click **Install...** and select the `atoms_visualizer.py` file.
+5. Enable the **Atoms Visualizer** addon in the list.
+6. You will find the addon in the **Sidebar (`N` key)** under the **Atoms Visualizer** tab.
 
 ---
 
-## 📂 Usage
+## 📁 Additional Setup
 
-1. Open the **Atoms Visualizer** panel in the 3D Viewport sidebar.
-2. Click the `.xyz` button to load an atomic file.
-3. Adjust **Atomic Radii** and **Bond Thickness** from the UI.
+The addon requires a `materials.json` file to load element-specific properties like atomic radius and bond thickness.
+
+### ➕ Step: Copy `materials.json`
+
+Copy the provided `materials.json` file to Blender's **addons directory**:
+
+#### 🔧 Linux
+```
+~/.config/blender/[your_blender_version]/scripts/addons/
+```
+
+#### 🔧 Windows
+```
+%APPDATA%\Blender Foundation\Blender[your_blender_version]\scripts\addons\
+```
+
+> 🔁 Replace `[your_blender_version]` with your installed Blender version, e.g., `3.6`.
+
+After copying, **restart Blender** to apply changes.
+
+---
+
+## 📤 Features
+
+- ✅ Import atomic structures from `.xyz` files.
+- ✅ Automatically assign atomic radii and display bonds.
+- ✅ Customize atomic and bond visuals through the UI.
+- ✅ Simple and lightweight, designed for quick inspection and visualization.
+
+---
