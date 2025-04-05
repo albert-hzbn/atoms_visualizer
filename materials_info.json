@@ -1,0 +1,289 @@
+{
+    "atom_info": {
+        "H": {
+            "radius": 0.53
+        },
+        "He": {
+            "radius": 0.31
+        },
+        "Li": {
+            "radius": 1.67
+        },
+        "Be": {
+            "radius": 1.12
+        },
+        "B": {
+            "radius": 0.87
+        },
+        "C": {
+            "radius": 0.67
+        },
+        "N": {
+            "radius": 0.56
+        },
+        "O": {
+            "radius": 0.48
+        },
+        "F": {
+            "radius": 0.42
+        },
+        "Ne": {
+            "radius": 0.38
+        },
+        "Na": {
+            "radius": 1.90
+        },
+        "Mg": {
+            "radius": 1.45
+        },
+        "Al": {
+            "radius": 1.18
+        },
+        "P": {
+            "radius": 0.98
+        },
+        "S": {
+            "radius": 0.88
+        },
+        "Cl": {
+            "radius": 0.79
+        },
+        "Ar": {
+            "radius": 0.71
+        },
+        "K": {
+            "radius": 2.43
+        },
+        "Ca": {
+            "radius": 1.94
+        },
+        "Sc": {
+            "radius": 1.84
+        },
+        "Ti": {
+            "radius": 1.76
+        },
+        "V": {
+            "radius": 1.71
+        },
+        "Cr": {
+            "radius": 1.66
+        },
+        "Mn": {
+            "radius": 1.61
+        },
+        "Fe": {
+            "radius": 1.56
+        },
+        "Co": {
+            "radius": 1.52
+        },
+        "Ni": {
+            "radius": 1.49
+        },
+        "Cu": {
+            "radius": 1.45
+        },
+        "Zn": {
+            "radius": 1.42
+        },
+        "Ga": {
+            "radius": 1.36
+        },
+        "Ge": {
+            "radius": 1.25
+        },
+        "As": {
+            "radius": 1.14
+        },
+        "Se": {
+            "radius": 1.03
+        },
+        "Br": {
+            "radius": 0.94
+        },
+        "Kr": {
+            "radius": 0.88
+        },
+        "Rb": {
+            "radius": 2.65
+        },
+        "Sr": {
+            "radius": 2.19
+        },
+        "Y": {
+            "radius": 2.12
+        },
+        "Zr": {
+            "radius": 2.06
+        },
+        "Nb": {
+            "radius": 1.98
+        },
+        "Mo": {
+            "radius": 1.90
+        },
+        "Tc": {
+            "radius": 1.83
+        },
+        "Ru": {
+            "radius": 1.78
+        },
+        "Rh": {
+            "radius": 1.73
+        },
+        "Pd": {
+            "radius": 1.69
+        },
+        "Ag": {
+            "radius": 1.65
+        },
+        "Cd": {
+            "radius": 1.55
+        },
+        "In": {
+            "radius": 1.56
+        },
+        "Sn": {
+            "radius": 1.45
+        },
+        "Sb": {
+            "radius": 1.33
+        },
+        "Te": {
+            "radius": 1.23
+        },
+        "I": {
+            "radius": 1.15
+        },
+        "Xe": {
+            "radius": 1.08
+        },
+        "Cs": {
+            "radius": 2.98
+        },
+        "Ba": {
+            "radius": 2.53
+        },
+        "La": {
+            "radius": 2.26
+        },
+        "Ce": {
+            "radius": 2.98
+        },
+        "Pr": {
+            "radius": 2.47
+        },
+        "Nd": {
+            "radius": 2.06
+        },
+        "Pm": {
+            "radius": 2.05
+        },
+        "Sm": {
+            "radius": 2.38
+        },
+        "Eu": {
+            "radius": 2.31
+        },
+        "Tb": {
+            "radius": 2.25
+        },
+        "Dy": {
+            "radius": 2.28
+        },
+        "Ho": {
+            "radius": 2.26
+        },
+        "Er": {
+            "radius": 2.26
+        },
+        "Tm": {
+            "radius": 2.22
+        },
+        "Yb": {
+            "radius": 2.22
+        },
+        "Lu": {
+            "radius": 2.17
+        },
+        "Hf": {
+            "radius": 2.08
+        },
+        "Ta": {
+            "radius": 2.00
+        },
+        "W": {
+            "radius": 1.93
+        },
+        "Re": {
+            "radius": 1.88
+        },
+        "Os": {
+            "radius": 1.85
+        },
+        "Ir": {
+            "radius": 1.80
+        },
+        "Pt": {
+            "radius": 1.77
+        },
+        "Au": {
+            "radius": 1.74
+        },
+        "Hg": {
+            "radius": 1.50
+        },
+        "Tl": {
+            "radius": 1.56
+        },
+        "Pb": {
+            "radius": 1.54
+        },
+        "Bi": {
+            "radius": 1.43
+        },
+        "Po": {
+            "radius": 1.35
+        },
+        "At": {
+            "radius": 1.27
+        },
+        "Rn": {
+            "radius": 1.20
+        }
+    },
+    "bond_info": {
+        "C": [
+            "H",
+            "O",
+            "C"
+        ],
+        "H": [
+            "O",
+            "C",
+            "H"
+        ],
+        "O": [
+            "H",
+            "C",
+            "O"
+        ],
+        "Na": [
+            "Cl",
+            "O"
+        ],
+        "N": [
+            "O"
+        ],
+        "Cl": [
+            "Na"
+        ],
+        "F": [
+            "Al"
+        ],
+        "Al": [
+            "F"
+        ]
+    }
+}
