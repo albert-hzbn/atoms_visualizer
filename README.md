@@ -18,9 +18,7 @@ A simple Blender addon to load and visualize atomic structures from `.xyz` files
 
 ## 🚀 Installation
 
-### Option 1: From `.py` File
-
-1. Download the `atoms_visualizer.py` file.
+1. Download the `.zip` file.
 2. Open **Blender**.
 3. Go to `Edit` → `Preferences` → `Add-ons`.
 4. Click **Install...** and select the `atoms_visualizer.py` file.
