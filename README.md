@@ -43,10 +43,3 @@
 1. Open the **Atoms Visualizer** panel in the 3D Viewport sidebar.
 2. Click the `.xyz` button to load an atomic file.
 3. Adjust **Atomic Radii** and **Bond Thickness** from the UI.
-
----
-
-
-## 💬 Author
-
-Created by **Albert Linda**
