@@ -2,7 +2,7 @@
 bl_info = {
     "name":"Atoms Visualizer",
     "author": "Albert Linda",
-    "version":(0,0,1),
+    "version":(0,1,0),
     "blender": (2,80,0),
     "location": "3D Viewport > SideBar > Atoms Visualizer",
     "description": "A simple addon to load atoms in .xyz format.",
@@ -11,7 +11,6 @@ bl_info = {
 
 
 import bpy
-import colorsys
 import mathutils
 import math
 import json
@@ -28,6 +27,14 @@ bond_cutoff_distance = 3
 atoms = []
 atom_info = {}
 bond_info = {}
+
+
+def normalize_rgba(color_value):
+    if isinstance(color_value, (list, tuple)) and len(color_value) == 4:
+        return tuple(float(channel) for channel in color_value)
+    if isinstance(color_value, (list, tuple)) and len(color_value) == 3:
+        return (float(color_value[0]), float(color_value[1]), float(color_value[2]), 1.0)
+    return (0.8, 0.8, 0.8, 1.0)
 
 def read_poscar(file_path):
     global atoms
@@ -149,81 +156,6 @@ def color_collection(collection_name, color=(1, 0, 0, 1)):
 
 
 
-def get_periodic_table_colors():
-    """
-    Generate distinct colors for all elements in the periodic table.
-    
-    Returns:
-        dict: Dictionary mapping element symbols to RGBA color tuples
-    """
-    # Dictionary of all elements in the periodic table
-    elements = [
-        "H", "He", 
-        "Li", "Be", "B", "C", "N", "O", "F", "Ne", 
-        "Na", "Mg", "Al", "Si", "P", "S", "Cl", "Ar", 
-        "K", "Ca", "Sc", "Ti", "V", "Cr", "Mn", "Fe", "Co", "Ni", "Cu", "Zn", "Ga", "Ge", "As", "Se", "Br", "Kr", 
-        "Rb", "Sr", "Y", "Zr", "Nb", "Mo", "Tc", "Ru", "Rh", "Pd", "Ag", "Cd", "In", "Sn", "Sb", "Te", "I", "Xe", 
-        "Cs", "Ba", "La", "Ce", "Pr", "Nd", "Pm", "Sm", "Eu", "Gd", "Tb", "Dy", "Ho", "Er", "Tm", "Yb", "Lu", 
-        "Hf", "Ta", "W", "Re", "Os", "Ir", "Pt", "Au", "Hg", "Tl", "Pb", "Bi", "Po", "At", "Rn", 
-        "Fr", "Ra", "Ac", "Th", "Pa", "U", "Np", "Pu", "Am", "Cm", "Bk", "Cf", "Es", "Fm", "Md", "No", "Lr", 
-        "Rf", "Db", "Sg", "Bh", "Hs", "Mt", "Ds", "Rg", "Cn", "Nh", "Fl", "Mc", "Lv", "Ts", "Og"
-    ]
-    
-    # Common CPK (Corey-Pauling-Koltun) color scheme for some frequent elements
-    cpk_colors = {
-        "H": (1.0, 1.0, 1.0, 1.0),           # White
-        "C": (0.5, 0.5, 0.5, 1.0),           # Grey
-        "N": (0.0, 0.0, 1.0, 1.0),           # Blue
-        "O": (1.0, 0.0, 0.0, 1.0),           # Red
-        "F": (0.0, 1.0, 0.0, 1.0),           # Green
-        "Cl": (0.0, 1.0, 0.0, 1.0),          # Green
-        "Br": (0.6, 0.2, 0.1, 1.0),          # Brown
-        "I": (0.4, 0.0, 0.7, 1.0),           # Dark purple
-        "He": (0.85, 1.0, 1.0, 1.0),         # Light cyan
-        "Ne": (0.7, 0.9, 0.9, 1.0),          # Light blue
-        "Ar": (0.5, 0.8, 0.9, 1.0),          # Light blue
-        "P": (1.0, 0.5, 0.0, 1.0),           # Orange
-        "S": (1.0, 0.8, 0.0, 1.0),           # Yellow
-        "Li": (0.7, 0.0, 0.0, 1.0),          # Burgundy red
-        "Na": (0.7, 0.0, 0.0, 1.0),          # Burgundy red
-        "K": (0.7, 0.0, 0.0, 1.0),           # Burgundy red
-        "Mg": (0.0, 0.6, 0.0, 1.0),          # Forest green
-        "Ca": (0.0, 0.6, 0.0, 1.0),          # Forest green
-        "Fe": (0.6, 0.5, 0.0, 1.0),          # Dark yellow
-        "Si": (0.7, 0.7, 0.7, 1.0),          # Light grey
-        "Al": (0.6, 0.8, 0.8, 1.0),          # Light blue
-        "Ni": (0.5, 0.5, 0.0, 1.0),          # Bronze
-        "Cu": (0.7, 0.1, 0.1, 1.0),          # Copper red
-        "Zn": (0.4, 0.4, 0.7, 1.0),          # Light purple
-        "Ag": (0.8, 0.8, 0.8, 1.0),          # Silver
-        "Au": (1.0, 0.8, 0.0, 1.0),          # Gold
-        "Ru": (1.0, 0.0, 0.0, 0.0)           # Red
-    }
-    
-    # Generate colors for all other elements not in the CPK scheme
-    element_colors = {}
-    
-    # Add CPK colors first
-    for element, color in cpk_colors.items():
-        element_colors[element] = color
-    
-    # Generate colors for remaining elements
-    remaining_elements = [e for e in elements if e not in cpk_colors]
-    num_remaining = len(remaining_elements)
-    
-    for i, element in enumerate(remaining_elements):
-        # Use HSV color space for even distribution of colors
-        hue = i / num_remaining
-        saturation = 0.75 + (i % 3) * 0.08  # Slight variation in saturation
-        value = 0.8 + (i % 4) * 0.05        # Slight variation in value
-        
-        # Convert HSV to RGB
-        r, g, b = colorsys.hsv_to_rgb(hue, saturation, value)
-        # Add alpha channel
-        element_colors[element] = (r, g, b, 1.0)
-    
-    return element_colors
-
 def create_cylinder_between_points(point1, point2, name="CustomCylinder"):
     """
     Create a cylinder between two points in Blender using Python.
@@ -298,25 +230,30 @@ def get_material_info():
 
     # Loading JSON data
     json_path = os.path.join(os.path.dirname(__file__), "materials_info.json")
-    with open(json_path, "r") as file:
-        data = json.load(file)
-    
+    data = {}
+    if os.path.exists(json_path):
+        with open(json_path, "r") as file:
+            data = json.load(file)
+
     all_atom_info = {}
     all_bond_info = {}
 
-    # Accessing specific elements (assuming data is a dictionary)
+    # Load metadata from JSON only.
     if isinstance(data, dict):
-        if 'atom_info' in data:
-            all_atom_info = data['atom_info']
-        if 'bond_info' in data:
-            all_bond_info = data['bond_info']
-        
+        json_atom_info = data.get('atom_info', {})
+        if isinstance(json_atom_info, dict):
+            all_atom_info = json_atom_info
 
+        all_bond_info = data.get('bond_info', {}) if isinstance(data.get('bond_info', {}), dict) else {}
+
+    atom_info.clear()
+    bond_info.clear()
     for elem in elem_list:
-        atom_info[elem] = all_atom_info[elem]
-        bond_info[elem] = all_bond_info[elem]
-
-    print(atom_info, bond_info)
+        info = dict(all_atom_info.get(elem, {"radius": 1.0, "color": (0.8, 0.8, 0.8, 1.0)}))
+        info["radius"] = float(info.get("radius", 1.0))
+        info["color"] = normalize_rgba(info.get("color", (0.8, 0.8, 0.8, 1.0)))
+        atom_info[elem] = info
+        bond_info[elem] = all_bond_info.get(elem, [])
     
     # return atom_info, bond_info
 
@@ -334,9 +271,9 @@ def list_bonds():
     # print(bond_info)
     for ind1 in range(0, num_atoms):
         elem1, x1, y1, z1 = atoms[ind1]
-        for ind2 in range(ind1, num_atoms):
+        for ind2 in range(ind1 + 1, num_atoms):
             elem2, x2, y2, z2 = atoms[ind2]
-            if (elem2 in bond_info[elem1] or elem1 in bond_info[elem2]):
+            if (elem2 in bond_info.get(elem1, []) or elem1 in bond_info.get(elem2, [])):
                 distance = ((x2 - x1)**2 + (y2 - y1)**2 + (z2 - z1)**2)**0.5
                 if (distance < bond_cutoff_distance):
                     bond = {
@@ -358,9 +295,90 @@ def create_bonds():
         create_cylinder_between_points(p1, p2, name="bond")
 
 
+def get_structure_center_and_radius():
+    """Compute a bounding sphere from current atom positions and radii."""
+    if not atoms:
+        return mathutils.Vector((0.0, 0.0, 0.0)), 1.0
+
+    center = mathutils.Vector((0.0, 0.0, 0.0))
+    for _, x, y, z in atoms:
+        center += mathutils.Vector((x, y, z))
+    center /= len(atoms)
+
+    radius = 0.0
+    for elem, x, y, z in atoms:
+        atom_pos = mathutils.Vector((x, y, z))
+        atom_radius = float(atom_info.get(elem, {}).get("radius", 1.0))
+        radius = max(radius, (atom_pos - center).length + atom_radius)
+
+    return center, max(radius, 1.0)
+
+
+def setup_default_sun_light():
+    """Create/update a Sun light placed away from the structure center."""
+    center, radius = get_structure_center_and_radius()
+    light_name = "AtomsVisualizer_Sun"
+
+    light_object = bpy.data.objects.get(light_name)
+    if light_object is None or light_object.type != 'LIGHT':
+        light_data = bpy.data.lights.get(light_name)
+        if light_data is None:
+            light_data = bpy.data.lights.new(name=light_name, type='SUN')
+        else:
+            light_data.type = 'SUN'
+
+        light_object = bpy.data.objects.new(light_name, light_data)
+        bpy.context.scene.collection.objects.link(light_object)
+
+    light_data = light_object.data
+    light_data.type = 'SUN'
+    light_data.energy = 3.0
+    light_data.angle = math.radians(5.0)
+
+    sun_direction = mathutils.Vector((-1.0, -1.0, 2.0)).normalized()
+    light_object.location = center + sun_direction * (radius * 8.0)
+
+    # Point sunlight toward the structure center.
+    to_center = (center - light_object.location).normalized()
+    light_object.rotation_euler = to_center.to_track_quat('-Z', 'Y').to_euler()
+
+
+def setup_camera_isometric_view():
+    """Create/update camera and frame the full structure in a slight isometric view."""
+    scene = bpy.context.scene
+    center, radius = get_structure_center_and_radius()
+    camera_name = "AtomsVisualizer_Camera"
+
+    camera_object = bpy.data.objects.get(camera_name)
+    if camera_object is None or camera_object.type != 'CAMERA':
+        camera_data = bpy.data.cameras.get(camera_name)
+        if camera_data is None:
+            camera_data = bpy.data.cameras.new(camera_name)
+        camera_object = bpy.data.objects.new(camera_name, camera_data)
+        scene.collection.objects.link(camera_object)
+
+    camera_data = camera_object.data
+    camera_data.type = 'PERSP'
+    camera_data.lens = 50
+
+    # Use the narrower FOV axis to guarantee full fit.
+    fov = min(camera_data.angle_x, camera_data.angle_y)
+    fit_distance = (radius / math.tan(fov * 0.5)) * 1.25
+
+    iso_direction = mathutils.Vector((1.0, -1.0, 0.85)).normalized()
+    camera_object.location = center + iso_direction * fit_distance
+    look_vec = (center - camera_object.location).normalized()
+    camera_object.rotation_euler = look_vec.to_track_quat('-Z', 'Y').to_euler()
+
+    scene.camera = camera_object
+
+
 def load_structure(file_path):
     global elem_list
     global atoms
+    global current_atoms_info
+
+    current_atoms_info = {}
 
     # Read the POSCAR file
     read_poscar(file_path)
@@ -373,9 +391,11 @@ def load_structure(file_path):
     # Organize atoms into collections by element type
     organize_into_collections()
     
-    element_colors = get_periodic_table_colors()
     for elem in elem_list:
-        color_collection(elem, color=element_colors[elem])
+        color_collection(elem, color=atom_info[elem]["color"])
+
+    setup_default_sun_light()
+    setup_camera_isometric_view()
 
     # Reinitiazize the text fields 
     for scene in bpy.data.scenes:
@@ -409,13 +429,11 @@ class LoadFileOperator(Operator, ImportHelper):
         # For example, if it's an image:
         if filepath.lower().endswith(('.xyz')):
             try:
-                # Load as image texture
-                bpy.ops.image.open(filepath=filepath)
-                self.report({'INFO'}, f"Image loaded: {filename}")
                 load_structure(filepath)
+                self.report({'INFO'}, f"Structure loaded: {filename}")
                 
             except Exception as e:
-                self.report({'ERROR'}, f"Failed to load image: {str(e)}")
+                self.report({'ERROR'}, f"Failed to load structure: {str(e)}")
                 return {'CANCELLED'}
         return {'FINISHED'}
     

@@ -8,7 +8,6 @@ A simple Blender addon to load and visualize atomic structures from `.xyz` files
 
 - **Name:** Atoms Visualizer  
 - **Author:** Albert Linda  
-- **Version:** 0.0.1  
 - **Blender Support:** 2.80+  
 - **Category:** Import-Export  
 - **Location in Blender:** 3D Viewport → Sidebar (`N` key) → Atoms Visualizer tab  
@@ -18,43 +17,34 @@ A simple Blender addon to load and visualize atomic structures from `.xyz` files
 
 ## 🚀 Installation
 
-1. Download the `.zip` file.
-2. Open **Blender**.
-3. Go to `Edit` → `Preferences` → `Add-ons`.
-4. Click **Install...** and select the `atoms_visualizer.py` file.
-5. Enable the **Atoms Visualizer** addon in the list.
-6. You will find the addon in the **Sidebar (`N` key)** under the **Atoms Visualizer** tab.
+Install this addon as a **zip package** (multi-file addon), not as a single `.py` file.
+
+1. Create a folder named `atoms_visualizer` containing:
+	- `__init__.py`
+	- `atoms_visualizer.py`
+	- `materials_info.json`
+2. Zip that folder (the zip should contain the `atoms_visualizer/` directory at top level).
+3. Open **Blender**.
+4. Go to `Edit` → `Preferences` → `Add-ons`.
+5. Click **Install...** and select the zip file.
+6. Enable the **Atoms Visualizer** addon in the list.
+7. You will find the addon in the **Sidebar (`N` key)** under the **Atoms Visualizer** tab.
 
 ---
 
-## 📁 Additional Setup
+## 📁 Data Files
 
-The addon requires a `materials.json` file to load element-specific properties like atomic radius and bond thickness.
+The addon uses one data source inside the addon package:
 
-### ➕ Step: Copy `materials.json`
-
-Copy the provided `materials.json` file to Blender's **addons directory**:
-
-#### 🔧 Linux
-```
-~/.config/blender/[your_blender_version]/scripts/addons/
-```
-
-#### 🔧 Windows
-```
-%APPDATA%\Blender Foundation\Blender[your_blender_version]\scripts\addons\
-```
-
-> 🔁 Replace `[your_blender_version]` with your installed Blender version, e.g., `3.6`.
-
-After copying, **restart Blender** to apply changes.
+- `materials_info.json`: atom metadata (radius + color) and bond rules.
 
 ---
 
 ## 📤 Features
 
 - ✅ Import atomic structures from `.xyz` files.
-- ✅ Automatically assign atomic radii and display bonds.
+- ✅ Automatically assign atomic radii and element colors for all elements.
+- ✅ Display bonds using configurable bond rules.
 - ✅ Customize atomic and bond visuals through the UI.
 - ✅ Simple and lightweight, designed for quick inspection and visualization.
 
