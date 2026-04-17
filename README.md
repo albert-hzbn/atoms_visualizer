@@ -21,7 +21,15 @@ Install this addon as a **zip package** (multi-file addon), not as a single `.py
 
 1. Create a folder named `atoms_visualizer` containing:
 	- `__init__.py`
+	- `addon.py`
 	- `atoms_visualizer.py`
+	- `controller.py`
+	- `data_loader.py`
+	- `operators.py`
+	- `props.py`
+	- `scene_builder.py`
+	- `state.py`
+	- `ui.py`
 	- `materials_info.json`
 2. Zip that folder (the zip should contain the `atoms_visualizer/` directory at top level).
 3. Open **Blender**.
